@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+<h1><a href="{% url 'critique:index' %}">CritBook</a></h1>
+<ul>
+    <li>
+        <a href="{% url 'critique:about' %}">About</a>
+    </li>
+</ul>
+<ul>
+{% for critique in critique_list %}
+    <li>
+        <a href="{% url 'critique:notes' critique.id %}">{{ critique.title }}</a>
+    </li>
+{% endfor %}
+</ul>           
+{% endblock sidebar %}
+
+{% block content %}
+
+<div id="static">
+    <h1>About</h1>
+    <div>
+        <p>During my time at DreamWorks, I always wanted a better way to keep up with my  
+            notes from dailies. We had our own notebooks of course, and we were given various online 
+            tools over the years. But none of our tools ever had a way to easily associate 
+            an image, let alone label the areas of interest. This is a quick Django/Jquery 
+            proof-of-concept for such a tool.</p>
+
+        <p>I completed this project in two weeks using Django 1.8 with Python 2.7, MySQL and Jquery. 
+            Limitations of the public app include:</p>
+
+        <ul>
+            <li>The app was built for desktop browsers only, and is not mobile-friendly</li>
+            <li>The first critique in the list cannot be deleted</li>
+            <li>No more than three critiques can exist at one time</li>
+            <li>Image upload and replacement is disabled</li>
+        </ul>
+    </div>
+    {% include 'critique/footer.html' %}
+</div>
+
+{% endblock content %}

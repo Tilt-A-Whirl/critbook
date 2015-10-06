@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load critique_extras %}
+
+{% block sidebar %}
+<h1><a href="{% url 'critique:index' %}">CritBook</a></h1>
+<ul>
+    <li>
+        <a href="{% url 'critique:about' %}">About</a>
+    </li>
+</ul>
+<ul>
+{% for critique in critique_list %}
+	<li>
+		<a href="{% url 'critique:notes' critique.id %}">{{ critique.title }}</a>
+	</li>
+{% endfor %}
+</ul>   		
+{% endblock sidebar %}
+
+{% block content %}
+
+{% comment %} 
+	Field errors are not displayed on text inputs because they are
+	invalid usually only when they are empty. In that case we can
+	just reload the page without displaying the error.
+{% endcomment %}
+
+<header>
+	<h1>{{ critique.title }}</h1>
+</header>
+
+<div id="critique">
+	<div id="note-area">
+		<div>
+			{% if critique.note_set.all.count < max_notes %}
+			{{ new_form.non_field_errors }}
+			<form id="form-new" action="." method="post">
+			    {% csrf_token %}
+				{{ new_form.text }}
+				<input type="hidden" name="new_note" value="1" />
+			</form>
+			{% else %}
+			<p class="message">Maximum number of notes has been reached.</p>
+			{% endif %}
+		</div>
+		<ul id="edit-list">
+		{% for edit_form in edit_forms %}
+		    <li>
+		    	{{ edit_form.non_field_errors }}
+		    	<form id="form-{{ forloop.counter0|label }}" action="." method="post">
+		    		{% csrf_token %}
+		    		{{ edit_form.isCompleted }}<label for="isCompleted"></label>
+		    		<input class="delete hidden" type="checkbox" name="delete" /><label class="hidden" for="delete"></label>
+		    		<label class="id">{{ forloop.counter0|label }}</label> 
+		    		<span class="{% if edit_form.isCompleted.value %}done{% endif %}">{{ edit_form.text.value }}</span>
+		    		{{ edit_form.text }}
+		    		<input type="hidden" name="note_id" value="{{ edit_form.instance.id }}" />
+		    		<input type="hidden" name="critique" value="{{ critique.id }}" />
+		    		<input type="hidden" name="pos_x" value="{{ edit_form.pos_x.value }}" />
+		    		<input type="hidden" name="pos_y" value="{{ edit_form.pos_y.value }}" />
+		    		<input type="hidden" name="height" value="{{ critique.height }}" />
+		    	</form>
+		    </li>
+		{% endfor %}
+		</ul>
+		<p>Double-click text to edit or delete</p>
+	</div>
+
+	<div id="image-area">
+		<div id="image">
+			{% if critique.image_file %}
+			<img src="{{ critique.image_file.url }}" width="{{ critique.width }}" height="{{ critique.height }}" />
+			{% else %}
+			<img src="{% static "critique/images/noimg.gif" %}" width="1024" height="680" />
+			{% endif %}
+			<ul id="image-labels">
+			{% for edit_form in edit_forms %}	
+				<li id="label-{{ forloop.counter0|label }}">{{ forloop.counter0|label }}</li>
+			{% endfor %}
+			</ul>
+		</div>
+		{{ image_form.non_field_errors }}
+		<form action="." id="image-form" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ image_form.image_file.errors }}
+			<input type="file" name="image_file" />
+			{% if image_form.image_file.value %}
+			<input type="submit" value="Replace" />
+			{% else %}
+			<input type="submit" value="Upload" />
+			{% endif %}
+		</form>
+	</div>
+</div>
+
+{% include 'critique/footer.html' %}
+
+{% endblock content %}

@@ -1,0 +1,52 @@
+// Flexbox mixins
+
+@mixin flex-display() {
+	display: -webkit-box;  		// OLD - iOS 6-, Safari 3.1-6, BB7 
+	display: -ms-flexbox;  		// TWEENER - IE 10
+	display: -webkit-flex; 		// NEW - Safari 6.1+. iOS 7.1+, BB10 
+	display: flex;         		// NEW, Spec - Firefox, Chrome, Opera 
+}
+
+@mixin flex-settings($value) {
+	-webkit-box-flex: $value;   // OLD - iOS 6-, Safari 3.1-6 
+	width: 20%;            		// For old syntax, otherwise collapses. 
+	-webkit-flex: $value;       // Safari 6.1+. iOS 7.1+, BB10 
+	-ms-flex: $value;	        // IE 10 
+	flex: $value;               // NEW, Spec - Firefox, Chrome, Opera 
+}
+
+// Hanging indent for list items
+
+@mixin hanging-indent($value) {
+	padding-left: $value;
+	text-indent: -($value);
+}
+
+// Fixed width for flex elements
+
+@mixin fixed-width($value) {
+	min-width: $value;
+	max-width: $value;
+}
+
+// Width range for flex elements
+
+@mixin limited-width($min_value, $max_value) {
+	min-width: $min_value;
+	max-width: $max_value;
+}
+
+// Checkbox/label absolute positioning 
+
+@mixin abs-position($size, $t, $r, $b, $l) {
+	position: absolute;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: $size;
+	height: $size;
+	top: $t;
+	right: $r;
+	bottom: $b;
+	left: $l;
+}

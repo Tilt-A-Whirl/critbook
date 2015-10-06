@@ -1,0 +1,95 @@
+// Globals
+
+* {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+body {
+	background-color: $very-lt-gray;
+	font-family: $font-family;
+	color: $mid-gray;
+}
+
+h1, h2 {
+	display: block;
+	font-weight: bold;
+	min-width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-size: 70px;
+	color: $lt-gray;
+	a {
+		color: inherit;
+	}
+}
+
+h2 {
+	color: $dk-gray;
+	a {
+		color: inherit;
+	}
+}
+
+footer {
+	font-size: .8em;
+	margin: 60px 0 30px;
+	color: $lt-gray;
+	clear: both;
+}
+
+p {
+	font-size: 1.2em;
+	line-height: 1.2em;
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	line-height: 1.2em;
+	font-size: inherit;
+}
+
+img {
+	margin: 0;
+	padding: 0;
+}
+
+form {
+	display: inline-block;
+	width: 100%;
+}
+
+input[type="text"] {
+	color: $mid-gray;
+	font-size: 40px;
+	font-weight: bold;
+	line-height: 50px;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+textarea {
+	vertical-align: top;
+	font-family: inherit;
+	width: 100%;
+	padding: 5px;
+	font-size: 1em;
+	color: $dk-gray;
+	/* Firefox vertical align hack */
+	@-moz-document url-prefix() {
+		margin-top: -24px;
+	}
+}

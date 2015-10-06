@@ -1,0 +1,19 @@
+// Colors
+
+$black 				: #000;
+$white 				: #fff;
+$lt-gray			: #ddd;
+$dk-gray			: #777;
+$mid-gray			: lighten($dk-gray, 20%);
+$mid-lt-gray		: lighten($mid-gray, 10%);
+$very-lt-gray		: lighten($mid-lt-gray, 20%);
+$red				: #a33;
+$dk_red				: darken($red, 10%);
+
+// Fonts
+
+$font-family 		: Arial, Helvetica, sans-serif;
+
+// Other
+
+$top-padding		: 60px;

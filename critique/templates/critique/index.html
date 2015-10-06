@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block container_class %}home{% endblock %}
+
+{% block content %}
+
+{% comment %} 
+	Field errors are not displayed on text inputs because they are
+	invalid usually only when they are empty. In that case we can
+	just reload the page without displaying the error.
+{% endcomment %}
+
+<div id="home-area">
+
+    <header>
+        <h1>CritBook</h1>
+        <h2><a href="{% url 'critique:about' %}">About</a></h2>
+    </header>
+
+    {% if num_critiques < 3 %}
+    {{ new_form.non_field_errors }}
+    <form action="." method="post">
+        {% csrf_token %}
+        <input type="hidden" name="new_critique" value="1" />
+        {{ new_form.title }}
+    </form>
+    {% endif %}
+
+    {% if num_critiques > 0 %}
+        <ul id="edit-list">
+    	{% for edit_form in edit_forms %}
+    	    <li>
+                {{ edit_form.non_field_errors }}
+                <form action="." method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+        	    	{% if edit_form.instance.image_file %}
+            		<img src="{{ edit_form.instance.image_file.url }}" width="50" height="50" />
+            		{% else %}
+            		<img src="{% static "critique/images/noimg_sm.gif" %}" width="50" height="50" />
+        	    	{% endif %}
+        			{{ edit_form.title }} 
+                    {% if forloop.counter > 1 %}
+                    <input type="checkbox" name="delete" value="0" /><label for="delete"></label>
+                    {% endif %}
+                    <input type="hidden" name="critique_id" value="{{ edit_form.instance.id }}" />
+                    <span><label>{{ edit_form.title.value }}</label> <a href="{% url 'critique:notes' edit_form.instance.id %}">&nbsp;</a></span>
+        		</form> 
+    	    </li>
+    	{% endfor %}
+    	</ul>
+    {% else %}
+        <p>No critiques are available.</p>
+    {% endif %}
+
+    <p>Double-click text to edit or delete</p>
+
+    {% include 'critique/footer.html' %}
+</div>
+
+{% endblock content %}
