@@ -88,8 +88,4 @@ textarea {
 	padding: 5px;
 	font-size: 1em;
 	color: $dk-gray;
-	/* Firefox vertical align hack */
-	@-moz-document url-prefix() {
-		margin-top: -24px;
-	}
 }

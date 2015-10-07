@@ -171,7 +171,8 @@
 	}
 	ul {
 		overflow: scroll;
-		height: 282px;
+		overflow-y: auto;
+		height: 300px;
 		margin: 0;
 		padding: 0;
 	}
@@ -219,11 +220,6 @@
 			color: $dk-gray;
 			background-color: $lt-gray;
 			padding: 0;
-		}
-	}
-	textarea {
-		@-moz-document url-prefix() {
-			margin-top: -24px;
 		}
 	}
 	input[type="checkbox"] {

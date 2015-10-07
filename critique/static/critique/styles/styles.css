@@ -124,11 +124,8 @@ textarea {
   width: 100%;
   padding: 5px;
   font-size: 1em;
-  color: #777;
-  /* Firefox vertical align hack */ }
-@-moz-document url-prefix() {
-  textarea {
-    margin-top: -24px; } }
+  color: #777; }
+
 /* ----------------------------------------------------- */
 /* main containers                                       */
 /* ----------------------------------------------------- */
@@ -298,7 +295,8 @@ textarea {
     padding: 10px; }
   #note-area ul {
     overflow: scroll;
-    height: 282px;
+    overflow-y: auto;
+    height: 300px;
     margin: 0;
     padding: 0; }
   #note-area li {
@@ -341,9 +339,6 @@ textarea {
       color: #777;
       background-color: #ddd;
       padding: 0; }
-@-moz-document url-prefix() {
-  #note-area textarea {
-    margin-top: -24px; } }
   #note-area input[type="checkbox"] + label {
     position: absolute;
     display: inline-block;
